@@ -20,7 +20,7 @@ export default new Vuex.Store({
                 schemaTypes: [],
                 ruleSides: [],
                 name: '',
-                format: '',
+                formats: [],
                 fieldName: '',
                 groupName: '',
                 description: '',

@@ -17,28 +17,29 @@
                 <thead>
                 <tr>
 
-                    <th class="text-left">Название проверки</th>
-                    <th class="text-left">Тип схемы</th>
-                    <th class="text-left">Формат</th>
                     <th class="text-left">Тип документа</th>
                     <th class="text-left">Имя поля</th>
+                    <th class="text-left">Название проверки</th>
+                    <th class="text-left">Тип схемы</th>
                     <th class="text-left">Режим валидации</th>
                     <th class="text-left">Сторона проверки</th>
+                    <th class="text-left">Группа</th>
+                    <th class="text-left">Формат</th>
                     <th class="text-left">Включена?</th>
                     <th class="text-left">Описание</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="(item, index) in fieldRules" >
-
-                    <td>{{ item.name}}</td>
-                    <td>{{ item.schemaType}}</td>
-                    <td>{{ item.format }}</td>
 <!--                    todo-->
                     <td>{{ item.documentTypeId }}</td>
                     <td>{{ item.fieldName}}</td>
+                    <td>{{ item.name}}</td>
+                    <td>{{ item.schemaType}}</td>
                     <td>{{ item.validationMode}}</td>
                     <td>{{ item.ruleSide}}</td>
+                    <td>{{ item.groupName}}</td>
+                    <td>{{ item.format }}</td>
                     <td>
                         <v-switch
                                 v-model="item.enabled"

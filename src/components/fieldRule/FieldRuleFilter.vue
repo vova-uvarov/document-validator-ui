@@ -2,37 +2,6 @@
     <v-container>
         <v-row>
             <v-col cols="3">
-                <v-text-field
-                        type="text"
-                        label="Название"
-                        v-model="fieldRuleFilter.name"
-                ></v-text-field>
-            </v-col>
-            <v-col cols="3">
-                <v-text-field
-                        type="text"
-                        label="Группа проверки"
-                        v-model="fieldRuleFilter.group"
-                ></v-text-field>
-            </v-col>
-            <v-col cols="3">
-                <v-text-field
-                        type="text"
-                        label="Описание"
-                        v-model="fieldRuleFilter.description"
-                ></v-text-field>
-            </v-col>
-
-            <v-col cols="3">
-                <v-text-field
-                        type="text"
-                        label="Название поля"
-                        v-model="fieldRuleFilter.fieldName"
-                ></v-text-field>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col cols="3">
                 <v-combobox
                         :items="documentTypes"
                         item-text="value"
@@ -45,6 +14,23 @@
                         label="Тип документа"
                 ></v-combobox>
             </v-col>
+
+            <v-col cols="3">
+                <v-text-field
+                        type="text"
+                        label="Название поля"
+                        v-model="fieldRuleFilter.fieldName"
+                ></v-text-field>
+            </v-col>
+
+            <v-col cols="3">
+                <v-text-field
+                        type="text"
+                        label="Название проверки"
+                        v-model="fieldRuleFilter.name"
+                ></v-text-field>
+            </v-col>
+
             <v-col cols="3">
                 <v-combobox
                         :items="schemaTypes"
@@ -57,6 +43,17 @@
                 ></v-combobox>
             </v-col>
 
+        </v-row>
+        <v-row>
+
+            <v-col cols="3">
+                <v-combobox
+                        :items="valiidationModes"
+                        v-model="fieldRuleFilter.validationMode"
+                        :clearable="true"
+                        label="Режим валидации"
+                ></v-combobox>
+            </v-col>
             <v-col cols="3">
                 <v-combobox
                         :items="ruleSides"
@@ -68,15 +65,47 @@
                         label="Сторона проверки"
                 ></v-combobox>
             </v-col>
+
+            <v-col cols="3">
+                <v-text-field
+                        type="text"
+                        label="Группа проверки"
+                        v-model="fieldRuleFilter.groupName"
+                ></v-text-field>
+            </v-col>
+
+            <v-col cols="3">
+                <v-combobox
+                        :items="formats"
+                        v-model="fieldRuleFilter.formats"
+                        :clearable="true"
+                        multiple
+                        :search-input.sync="searchFormatValue"
+                        @change="searchFormatValue = ''"
+                        label="Формат"
+                ></v-combobox>
+            </v-col>
         </v-row>
-        <!--                private Format format;-->
-        <!--                private SearchMode filedRuleSearchMode;-->
-        <!--                private ValidationMode validationMode;-->
-        <!--                    private String groupName;-->
+
         <!--                    private Boolean enabled;-->
 
 
         <v-row>
+            <v-col cols="5">
+                <v-text-field
+                        type="text"
+                        label="Описание"
+                        v-model="fieldRuleFilter.description"
+                ></v-text-field>
+            </v-col>
+            <v-col cols="4">
+                <v-radio-group v-model="fieldRuleFilter.enabled" :mandatory="false" row>
+                    <v-subheader :inset="inset">Включена</v-subheader>
+                    <v-radio label="Не важно" value="ALL"></v-radio>
+                    <v-radio label="Да" value="true"></v-radio>
+                    <v-radio label="Нет" value="false"></v-radio>
+                </v-radio-group>
+            </v-col>
 
             <v-col cols="3">
                 <v-select
@@ -115,6 +144,7 @@
         public searchDocumentTypeValue = '';
         public searchSchemaTypeValue = '';
         public searchRuleSideValue = '';
+        public searchFormatValue = '';
 
         @Watch("fieldRuleFilter", {deep: true, immediate: true})
         public fieldViewFilterChanged(value: string, oldValue: string) {
@@ -131,6 +161,14 @@
 
         get ruleSides() {
             return ['ALL', 'SERVER', 'CLIENT'];
+        }
+
+        get valiidationModes() {
+            return ['ERROR', 'WARNING'];
+        }
+
+        get formats() {
+            return ['DATE'];
         }
 
         get schemaTypes() {
