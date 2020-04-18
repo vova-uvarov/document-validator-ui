@@ -1,0 +1,46 @@
+{
+  "name": "vue-document-validator-ui",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@mdi/font": "^4.5.95",
+    "axios": "^0.19.0",
+    "chart.js": "^2.8.0",
+    "core-js": "^2.6.5",
+    "debounce": "^1.2.0",
+    "moment": "^2.24.0",
+    "roboto-fontface": "*",
+    "vue": "^2.6.10",
+    "vue-chartjs": "^3.5.0",
+    "vue-class-component": "^7.0.2",
+    "vue-property-decorator": "^8.3.0",
+    "vue-router": "^3.0.3",
+    "vuetify": "^2.2.3",
+    "vuex": "^3.1.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-plugin-typescript": "^3.11.0",
+    "@vue/cli-service": "^3.12.0",
+    "sass": "^1.23.7",
+    "sass-loader": "^7.1.0",
+    "typescript": "^3.7.3",
+    "vue-cli-plugin-vuetify": "^2.0.2",
+    "vue-template-compiler": "^2.6.10",
+    "vuetify-loader": "^1.2.2"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}
