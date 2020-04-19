@@ -70,9 +70,7 @@
         public loading!: boolean;
 
         public getDocumentName(documentTypeId: string){
-            console.log("documentTypeId = " + documentTypeId);
             let documentType = this.$store.getters.getDocumentType(documentTypeId);
-            console.log("documentType = " + documentType);
             return DictionaryService.getDocumentName(documentType);
         }
 

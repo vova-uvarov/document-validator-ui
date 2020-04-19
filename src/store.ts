@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import DocumentService from '@/services/DocumentService';
 import FieldRuleService from "@/services/FieldRuleService";
+import DictionaryService from "@/services/DictionaryService";
 
 Vue.use(Vuex);
 
@@ -16,7 +17,7 @@ export default new Vuex.Store({
             totalPages: 0,
             currentPage: 1,
             filter: {
-                documentTypes: [],
+                documentTypes: <any> [],
                 schemaTypes: [],
                 ruleSides: [],
                 name: '',
@@ -45,6 +46,23 @@ export default new Vuex.Store({
     },
     mutations: {
         initState: (state) => {
+        },
+
+        resetFilterToDocumentType: (state, documentType:any) => {
+            let documentTypeFilter:any = {
+                'key': documentType,
+                'value': DictionaryService.getDocumentName(documentType)
+            };
+            state.fieldRuleView.filter.documentTypes = [documentTypeFilter];
+            state.fieldRuleView.filter.schemaTypes= [];
+            state.fieldRuleView.filter.ruleSides= [];
+            state.fieldRuleView.filter.formats= [];
+            state.fieldRuleView.filter.name= '';
+            state.fieldRuleView.filter.fieldName= '';
+            state.fieldRuleView.filter.groupName= '';
+            state.fieldRuleView.filter.description= '';
+            state.fieldRuleView.filter.validationMode= null;
+            state.fieldRuleView.filter.enabled= null;
         },
 
         updateDocuments: (state, newValue) => {

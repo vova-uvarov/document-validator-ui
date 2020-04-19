@@ -34,11 +34,12 @@
                                     </ul>
                                 </v-card-text>
                                 <v-card-actions>
-                                    <v-btn
+
+                                    <v-btn v-on:click="goToFieldRules(item.documentType)"
                                             text
                                             color="deep-purple accent-4"
                                     >
-                                        Подробнее
+                                            Подробнее
                                     </v-btn>
                                 </v-card-actions>
                             </v-card>
@@ -64,6 +65,11 @@
 
         public getDocumentName(documentType: string) {
             return DictionaryService.getDocumentName(documentType);
+        }
+
+        public goToFieldRules(documentType: string){
+            this.$store.commit('resetFilterToDocumentType', documentType);
+            this.$router.push("/fieldRules");
         }
     }
 </script>
