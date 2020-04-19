@@ -34,6 +34,9 @@ Vue.filter('dateFormatter', (value: any) => {
 });
 
 Vue.filter('truncateString', (value: any) => {
+    if (!value){
+        return value;
+    }
     if (value.length > 30) {
         return value.substring(0, 30) + '...';
     } else {

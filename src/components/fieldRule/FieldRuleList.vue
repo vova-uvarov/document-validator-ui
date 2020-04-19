@@ -13,47 +13,26 @@
             Идет загрузка данных...
         </v-col>
         <v-col cols="12">
-            <v-simple-table :dense="true">
-                <thead>
-                <tr>
+            <v-data-table
+                    :headers="headers"
+                    :items="items"
+                    :disable-sort="true"
+                    :hide-default-footer="true"
+                    class="elevation-1"
+            >
+                <template v-slot:item.enabled="{ item }">
+                    <v-switch
+                            v-model="item.enabled"
+                            label=""
+                            :disabled="true"
+                    ></v-switch>
+                </template>
 
-                    <th class="text-left">Тип документа</th>
-                    <th class="text-left">Имя поля</th>
-                    <th class="text-left">Название проверки</th>
-                    <th class="text-left">Тип схемы</th>
-                    <th class="text-left">Режим валидации</th>
-                    <th class="text-left">Сторона проверки</th>
-                    <th class="text-left">Группа</th>
-                    <th class="text-left">Формат</th>
-                    <th class="text-left">Включена?</th>
-                    <th class="text-left">Описание</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="(item, index) in fieldRules" >
-<!--                    todo-->
-                    <td>{{ getDocumentName(item.documentTypeId) }}</td>
-                    <td>{{ item.fieldName}}</td>
-                    <td>{{ item.name}}</td>
-                    <td>{{ item.schemaType}}</td>
-                    <td>{{ item.validationMode}}</td>
-                    <td>{{ item.ruleSide}}</td>
-                    <td>{{ item.groupName}}</td>
-                    <td>{{ item.format }}</td>
-                    <td>
-                        <v-switch
-                                v-model="item.enabled"
-                                label=""
-                                :disabled="true"
-                        ></v-switch>
-                    </td>
-                    <td>{{ item.description|truncateString}}</td>
-                </tr>
-
-                </tbody>
-            </v-simple-table>
+                <template v-slot:item.validationMode="{ item }">
+                    <v-chip :color="getValidationModeColor(item.validationMode)">{{item.validationMode}}</v-chip>
+                </template>
+            </v-data-table>
         </v-col>
-
     </v-row>
 </template>
 <script lang="ts">
@@ -69,9 +48,49 @@
         @Prop({default: false})
         public loading!: boolean;
 
-        public getDocumentName(documentTypeId: string){
+        public getDocumentName(documentTypeId: string) {
             let documentType = this.$store.getters.getDocumentType(documentTypeId);
             return DictionaryService.getDocumentName(documentType);
+        }
+
+        public getValidationModeColor(value:string) {
+            if (value =='ERROR'){
+                return 'red';
+            }
+            return 'orange';
+        }
+        get headers() {
+            return [
+                {text: 'Тип документа', value: 'documentType',},
+                {text: 'Имя поля', value: 'fieldName',},
+                {text: 'Название проверки', value: 'ruleName',},
+                {text: 'Тип схемы', value: 'schemaType',},
+                {text: 'Режим валидации', value: 'validationMode',},
+                {text: 'Сторона проверки', value: 'side',},
+                {text: 'Группа', value: 'group',},
+                {text: 'Формат', value: 'format',},
+                {text: 'Включена?', value: 'enabled',},
+                {text: 'Описание', value: 'description',},
+            ]
+        }
+
+        get items() {
+            return this.fieldRules.map((item: any) =>
+                (
+                    {
+                        documentType: this.getDocumentName(item.documentTypeId),
+                        fieldName: item.fieldName,
+                        ruleName: item.name,
+                        schemaType: item.schemaType,
+                        validationMode: item.validationMode,
+                        side: item.ruleSide,
+                        group: item.groupName,
+                        format: item.format,
+                        enabled: item.enabled,
+                        description: item.description,
+                    }
+                )
+            );
         }
 
     }

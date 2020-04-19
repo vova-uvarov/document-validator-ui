@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import DocumentService from '@/services/DocumentService';
 import FieldRuleService from "@/services/FieldRuleService";
 import DictionaryService from "@/services/DictionaryService";
+import RuleCheckService from "@/services/RuleCheckService";
 
 Vue.use(Vuex);
 
