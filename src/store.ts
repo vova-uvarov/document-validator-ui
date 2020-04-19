@@ -32,7 +32,17 @@ export default new Vuex.Store({
             }
         },
     },
-    getters: {},
+    getters: {
+        getDocumentType: (state) => (documentId: string) => {
+            if (documentId) {
+                let documentInfo: any = state.documents.find((d: any) => (d.documentRuleId == documentId));
+                if (documentInfo) {
+                    return documentInfo.documentType;
+                }
+            }
+            return null;
+        }
+    },
     mutations: {
         initState: (state) => {
         },

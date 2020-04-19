@@ -18,7 +18,6 @@
 
         public created() {
             this.$store.dispatch("loadDocuments");
-
         }
 
         get documents() {

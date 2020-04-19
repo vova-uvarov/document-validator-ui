@@ -32,7 +32,7 @@
                 <tbody>
                 <tr v-for="(item, index) in fieldRules" >
 <!--                    todo-->
-                    <td>{{ item.documentTypeId }}</td>
+                    <td>{{ getDocumentName(item.documentTypeId) }}</td>
                     <td>{{ item.fieldName}}</td>
                     <td>{{ item.name}}</td>
                     <td>{{ item.schemaType}}</td>
@@ -58,6 +58,7 @@
 </template>
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
+    import DictionaryService from "@/services/DictionaryService";
 
     @Component
     export default class FieldRuleList extends Vue {
@@ -67,6 +68,13 @@
 
         @Prop({default: false})
         public loading!: boolean;
+
+        public getDocumentName(documentTypeId: string){
+            console.log("documentTypeId = " + documentTypeId);
+            let documentType = this.$store.getters.getDocumentType(documentTypeId);
+            console.log("documentType = " + documentType);
+            return DictionaryService.getDocumentName(documentType);
+        }
 
     }
 </script>

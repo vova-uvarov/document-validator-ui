@@ -39,6 +39,7 @@
 
         public created() {
             this.$store.dispatch('reloadFieldRules');
+            this.$store.dispatch("loadDocuments");
         }
 
         get fieldRules() {

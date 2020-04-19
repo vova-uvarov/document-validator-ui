@@ -87,9 +87,6 @@
             </v-col>
         </v-row>
 
-        <!--                    private Boolean enabled;-->
-
-
         <v-row>
             <v-col cols="5">
                 <v-text-field
@@ -100,7 +97,7 @@
             </v-col>
             <v-col cols="4">
                 <v-radio-group v-model="fieldRuleFilter.enabled" :mandatory="false" row>
-                    <v-subheader :inset="inset">Включена</v-subheader>
+                    <v-subheader :inset="false">Включена</v-subheader>
                     <v-radio label="Не важно" value="ALL"></v-radio>
                     <v-radio label="Да" value="true"></v-radio>
                     <v-radio label="Нет" value="false"></v-radio>

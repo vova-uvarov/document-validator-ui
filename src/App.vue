@@ -1,6 +1,35 @@
 <template>
     <v-app id="inspire">
+        <v-navigation-drawer
+                v-model="drawer"
+                app
+                clipped
+        >
+            <v-list dense>
+                <v-list-item to="/">
+                    <v-list-item-action>
+                        <v-icon>mdi-view-list</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            Документы
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
 
+                <v-list-item to="/fieldRules">
+                    <v-list-item-action>
+                        <v-icon>mdi-format-list-checks</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            FieldRules
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+
+            </v-list>
+        </v-navigation-drawer>
         <v-app-bar
                 app
                 clipped-left

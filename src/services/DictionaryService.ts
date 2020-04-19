@@ -20,13 +20,6 @@ export default class DictionaryService {
         'CONVERSION_DOCUMENT': 'Покупка/продажа/конверсия валюты',
     };
 
-    public static all(): Promise<AxiosResponse<any>> {
-        return axios.get('/api/ui/documents')
-            .then((response) => {
-                return response.data;
-            });
-    }
-
     public static getDocumentTypes(): any {
         return this.DOCUMENT_TYPES;
     }
