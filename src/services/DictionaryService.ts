@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from 'axios';
+import store from "@/store";
 
 export default class DictionaryService {
 
@@ -26,6 +27,13 @@ export default class DictionaryService {
 
     public static getDocumentName(documentType: string): string {
         return this.DOCUMENT_TYPES[documentType];
+    }
+
+    public static loadKeywords(): Promise<AxiosResponse<any>> {
+        return axios.get('/api/ui/dictionary/keywords')
+            .then((response) => {
+                return response.data;
+            });
     }
 
 }

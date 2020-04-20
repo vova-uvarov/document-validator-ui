@@ -88,14 +88,14 @@
         </v-row>
 
         <v-row>
-            <v-col cols="5">
+            <v-col cols="6">
                 <v-text-field
                         type="text"
                         label="Описание"
                         v-model="fieldRuleFilter.description"
                 ></v-text-field>
             </v-col>
-            <v-col cols="4">
+            <v-col cols="3">
                 <v-radio-group v-model="fieldRuleFilter.enabled" :mandatory="false" row>
                     <v-subheader :inset="false">Включена</v-subheader>
                     <v-radio label="Не важно" value="ALL"></v-radio>
@@ -112,7 +112,27 @@
                 ></v-select>
             </v-col>
 
+        </v-row>
+        <v-row>
+            <v-col cols="6">
+                <v-text-field
+                        type="text"
+                        label="Сообщение"
+                        v-model="fieldRuleFilter.ruleCheckMessage"
+                ></v-text-field>
+            </v-col>
 
+            <v-col cols="3">
+                <v-combobox
+                        :items="keywords"
+                        v-model="fieldRuleFilter.keywords"
+                        :clearable="true"
+                        multiple
+                        :search-input.sync="serachKeywordValue"
+                        @change="serachKeywordValue = ''"
+                        label="Keyword"
+                ></v-combobox>
+            </v-col>
         </v-row>
         <v-row>
             <v-col cols="12">
@@ -142,6 +162,7 @@
         public searchSchemaTypeValue = '';
         public searchRuleSideValue = '';
         public searchFormatValue = '';
+        public serachKeywordValue = '';
 
         @Watch("fieldRuleFilter", {deep: true, immediate: true})
         public fieldViewFilterChanged(value: string, oldValue: string) {
@@ -154,6 +175,10 @@
         public applyFilter() {
             this.$store.commit('updateFieldRuleFilter', ObjectUtils.copy(this.fieldRuleFilter));
             this.$store.dispatch('reloadFieldRules');
+        }
+
+        get keywords() {
+            return this.$store.state.keywords.map((item: any) =>item.code);
         }
 
         get ruleSides() {

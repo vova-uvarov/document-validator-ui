@@ -75,6 +75,7 @@
         created() {
             this.$vuetify.theme.dark = false;
             this.$store.commit("initState");
+            this.$store.dispatch("loadKeywords");
         }
     }
 </script>

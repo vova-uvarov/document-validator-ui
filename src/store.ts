@@ -11,6 +11,7 @@ export default new Vuex.Store({
 
     strict: true,
     state: {
+        keywords: [],
         documents: [],
         fieldRules: [],
         fieldRuleView: {
@@ -21,6 +22,7 @@ export default new Vuex.Store({
                 documentTypes: <any> [],
                 schemaTypes: [],
                 ruleSides: [],
+                keywords: [],
                 name: '',
                 formats: [],
                 fieldName: '',
@@ -66,6 +68,11 @@ export default new Vuex.Store({
             state.fieldRuleView.filter.enabled= null;
         },
 
+
+        updateKeywords: (state, newValue) => {
+            state.keywords = newValue;
+        },
+
         updateDocuments: (state, newValue) => {
             state.documents = newValue;
         },
@@ -85,6 +92,11 @@ export default new Vuex.Store({
 
     },
     actions: {
+        loadKeywords(context) {
+            DictionaryService.loadKeywords()
+                .then((data) => (context.commit('updateKeywords', data)));
+
+        },
         loadDocuments(context) {
             DocumentService.all()
                 .then((data) => (context.commit('updateDocuments', data)));
