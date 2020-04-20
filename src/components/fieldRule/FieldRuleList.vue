@@ -43,7 +43,9 @@
                                 :items="getCheckData(item)"
                                 :disable-sort="true"
                                 :hide-default-footer="true">
-
+                            <template v-slot:item.parameters="{ item }">
+                                <Parameters :raw-parameters="item.parameters"/>
+                            </template>
                         </v-data-table>
                     </td>
                 </template>
@@ -54,8 +56,10 @@
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import DictionaryService from "@/services/DictionaryService";
-
-    @Component
+    import Parameters from "@/components/fieldRule/Parameters.vue";
+    @Component({
+        components: {Parameters}
+    })
     export default class FieldRuleList extends Vue {
 
         @Prop({default: []})
