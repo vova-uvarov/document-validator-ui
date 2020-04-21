@@ -4,6 +4,7 @@ import DocumentService from '@/services/DocumentService';
 import FieldRuleService from "@/services/FieldRuleService";
 import DictionaryService from "@/services/DictionaryService";
 import RuleCheckService from "@/services/RuleCheckService";
+import {Dictionaries} from "@/utils/Constants";
 
 Vue.use(Vuex);
 
@@ -11,7 +12,7 @@ export default new Vuex.Store({
 
     strict: true,
     state: {
-        keywords: [],
+        dictionaries: <any>{},
         documents: [],
         fieldRules: [],
         fieldRuleView: {
@@ -19,7 +20,7 @@ export default new Vuex.Store({
             totalPages: 0,
             currentPage: 1,
             filter: {
-                documentTypes: <any> [],
+                documentTypes: <any>[],
                 schemaTypes: [],
                 ruleSides: [],
                 keywords: [],
@@ -37,6 +38,19 @@ export default new Vuex.Store({
         },
     },
     getters: {
+        getDictionary: (state) => (dictionaryName: string) => {
+            return state.dictionaries[dictionaryName];
+        },
+        getDocumentName: (state) => (documentType: string) => {
+            let dictionary = state.dictionaries[Dictionaries.DOCUMENT_TYPE];
+            if (dictionary) {
+                let found = dictionary.find((d: any) => (d.code == documentType));
+                if (found) {
+                    return found.value;
+                }
+            }
+            return "";
+        },
         getDocumentType: (state) => (documentId: string) => {
             if (documentId) {
                 let documentInfo: any = state.documents.find((d: any) => (d.documentRuleId == documentId));
@@ -51,26 +65,25 @@ export default new Vuex.Store({
         initState: (state) => {
         },
 
-        resetFilterToDocumentType: (state, documentType:any) => {
-            let documentTypeFilter:any = {
+        resetFilterToDocumentType: (state, documentType: any) => {
+            let documentTypeFilter: any = {
                 'key': documentType,
-                'value': DictionaryService.getDocumentName(documentType)
             };
             state.fieldRuleView.filter.documentTypes = [documentTypeFilter];
-            state.fieldRuleView.filter.schemaTypes= [];
-            state.fieldRuleView.filter.ruleSides= [];
-            state.fieldRuleView.filter.formats= [];
-            state.fieldRuleView.filter.name= '';
-            state.fieldRuleView.filter.fieldName= '';
-            state.fieldRuleView.filter.groupName= '';
-            state.fieldRuleView.filter.description= '';
-            state.fieldRuleView.filter.validationMode= null;
-            state.fieldRuleView.filter.enabled= null;
+            state.fieldRuleView.filter.schemaTypes = [];
+            state.fieldRuleView.filter.ruleSides = [];
+            state.fieldRuleView.filter.formats = [];
+            state.fieldRuleView.filter.name = '';
+            state.fieldRuleView.filter.fieldName = '';
+            state.fieldRuleView.filter.groupName = '';
+            state.fieldRuleView.filter.description = '';
+            state.fieldRuleView.filter.validationMode = null;
+            state.fieldRuleView.filter.enabled = null;
         },
 
 
-        updateKeywords: (state, newValue) => {
-            state.keywords = newValue;
+        updateDictionaries: (state, payload) => {
+            state.dictionaries[payload.dictionaryName] = payload.data;
         },
 
         updateDocuments: (state, newValue) => {
@@ -92,9 +105,33 @@ export default new Vuex.Store({
 
     },
     actions: {
-        loadKeywords(context) {
-            DictionaryService.loadKeywords()
-                .then((data) => (context.commit('updateKeywords', data)));
+        loadDictionaries(context) {
+            DictionaryService.loadDictionary(Dictionaries.KEYWORD)
+                .then((data) => (context.commit('updateDictionaries', {dictionaryName: Dictionaries.KEYWORD, data})));
+
+            DictionaryService.loadDictionary(Dictionaries.RULE_SIDE)
+                .then((data) => (context.commit('updateDictionaries', {dictionaryName: Dictionaries.RULE_SIDE, data})));
+
+            DictionaryService.loadDictionary(Dictionaries.SCHEMA_TYPE)
+                .then((data) => (context.commit('updateDictionaries', {
+                    dictionaryName: Dictionaries.SCHEMA_TYPE,
+                    data
+                })));
+
+            DictionaryService.loadDictionary(Dictionaries.FORMAT)
+                .then((data) => (context.commit('updateDictionaries', {dictionaryName: Dictionaries.FORMAT, data})));
+
+            DictionaryService.loadDictionary(Dictionaries.VALIDATION_MODE)
+                .then((data) => (context.commit('updateDictionaries', {
+                    dictionaryName: Dictionaries.VALIDATION_MODE,
+                    data
+                })));
+
+            DictionaryService.loadDictionary(Dictionaries.DOCUMENT_TYPE)
+                .then((data) => (context.commit('updateDictionaries', {
+                    dictionaryName: Dictionaries.DOCUMENT_TYPE,
+                    data
+                })));
 
         },
         loadDocuments(context) {

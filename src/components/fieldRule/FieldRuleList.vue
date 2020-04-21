@@ -74,7 +74,7 @@
 
         public getDocumentName(documentTypeId: string) {
             let documentType = this.$store.getters.getDocumentType(documentTypeId);
-            return DictionaryService.getDocumentName(documentType);
+            return this.$store.getters.getDocumentName(documentType);
         }
 
         public getValidationModeColor(value:string) {

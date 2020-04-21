@@ -48,7 +48,7 @@
 
             <v-col cols="3">
                 <v-combobox
-                        :items="valiidationModes"
+                        :items="validationModes"
                         v-model="fieldRuleFilter.validationMode"
                         :clearable="true"
                         label="Режим валидации"
@@ -148,6 +148,7 @@
     import ObjectUtils from "@/utils/ObjectUtils";
     import DictionaryService from "@/services/DictionaryService";
     import Debounce from "@/utils/CustomDecorators";
+    import {Dictionaries} from "@/utils/Constants";
 
     @Component
     export default class FieldRuleFilter extends Vue {
@@ -178,32 +179,30 @@
         }
 
         get keywords() {
-            return this.$store.state.keywords.map((item: any) =>item.code);
+            return this.$store.getters.getDictionary(Dictionaries.KEYWORD).map((item: any) =>item.code);
         }
 
         get ruleSides() {
-            return ['ALL', 'SERVER', 'CLIENT'];
+            return this.$store.getters.getDictionary(Dictionaries.RULE_SIDE).map((item: any) =>item.code);
         }
 
-        get valiidationModes() {
-            return ['ERROR', 'WARNING'];
+        get validationModes() {
+            return this.$store.getters.getDictionary(Dictionaries.VALIDATION_MODE).map((item: any) =>item.code);
         }
 
         get formats() {
-            return ['DATE'];
+            return this.$store.getters.getDictionary(Dictionaries.FORMAT).map((item: any) =>item.code);
         }
 
         get schemaTypes() {
-            return ['ANY', 'OBJECT', 'ARRAY', 'STRING', 'NUMBER', 'INTEGER', 'BOOLEAN'];
+            return this.$store.getters.getDictionary(Dictionaries.SCHEMA_TYPE).map((item: any) =>item.code);
         }
 
         get documentTypes(): any[] {
-            let documentTypes = DictionaryService.getDocumentTypes();
-
-            return Object.keys(documentTypes).map(function (key) {
-                return {key: key, value: documentTypes[key]};
-            });
-
+            return this.$store.getters.getDictionary(Dictionaries.DOCUMENT_TYPE).map((item: any) => ({
+                key: item.code,
+                value: item.value
+            }));
         }
     }
 </script>

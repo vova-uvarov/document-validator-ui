@@ -36,10 +36,10 @@
                                 <v-card-actions>
 
                                     <v-btn v-on:click="goToFieldRules(item.documentType)"
-                                            text
-                                            color="deep-purple accent-4"
+                                           text
+                                           color="deep-purple accent-4"
                                     >
-                                            Подробнее
+                                        Подробнее
                                     </v-btn>
                                 </v-card-actions>
                             </v-card>
@@ -52,7 +52,6 @@
 </template>
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
-    import DictionaryService from "@/services/DictionaryService";
 
     @Component
     export default class DocumentsList extends Vue {
@@ -64,10 +63,10 @@
         public loading!: boolean;
 
         public getDocumentName(documentType: string) {
-            return DictionaryService.getDocumentName(documentType);
+            return this.$store.getters.getDocumentName(documentType);
         }
 
-        public goToFieldRules(documentType: string){
+        public goToFieldRules(documentType: string) {
             this.$store.commit('resetFilterToDocumentType', documentType);
             this.$router.push("/fieldRules");
         }
