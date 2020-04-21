@@ -18,6 +18,7 @@ export default class DictionaryService {
         'CURRENCY_TRANSFER_ORDER': 'Распоряжению на списание иностранной валюты с транзитного валютного счета',
         'CURRENCY_TRANSFER_ORDER_PATTERN': 'Шаблон для распоряжения на списание иностранной валюты с транзитного валютного счета',
         'CURRENCY_PAYMENT': 'Валютное платежное поручение',
+        'PAYMENT': 'Платежное поручение',
         'CONVERSION_DOCUMENT': 'Покупка/продажа/конверсия валюты',
     };
 

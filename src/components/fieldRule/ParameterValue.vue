@@ -13,11 +13,19 @@
     import {Component, Prop, Vue} from "vue-property-decorator";
 
     @Component
-    export default class Parameters extends Vue {
+    export default class ParameterValue extends Vue {
         @Prop({default: ""})
         public parameterValue!: string;
 
+        @Prop({default: ""})
+        public keyword!: string;
+
         get value() {
+            console.log("parameterValue=" + this.parameterValue)
+            console.log("keyword=" + this.keyword)
+            if (this.keyword == 'pattern') {
+                return [this.parameterValue];
+            }
             return this.parameterValue.split("=");
         }
     }

@@ -16,6 +16,7 @@
             <v-data-table
                     :headers="headers"
                     :items="items"
+                    :items-per-page="itemsPerPage"
                     :disable-sort="true"
                     :hide-default-footer="true"
                     item-key="id"
@@ -40,11 +41,12 @@
                         <v-data-table
                                 class="ruleCheckTable"
                                 :headers="checkHeaders"
+                                :items-per-page="100"
                                 :items="getCheckData(item)"
                                 :disable-sort="true"
                                 :hide-default-footer="true">
                             <template v-slot:item.parameters="{ item }">
-                                <Parameters :raw-parameters="item.parameters"/>
+                                <Parameters :raw-parameters="item.parameters" :keyword="item.keyword"/>
                             </template>
                         </v-data-table>
                     </td>
@@ -69,6 +71,7 @@
         public loading!: boolean;
         public expanded:any = [];
 
+
         public getDocumentName(documentTypeId: string) {
             let documentType = this.$store.getters.getDocumentType(documentTypeId);
             return DictionaryService.getDocumentName(documentType);
@@ -81,6 +84,9 @@
             return 'orange';
         }
 
+        get itemsPerPage() {
+            return this.$store.state.fieldRuleView.filter.size;
+        }
         get checkHeaders() {
             return [
                 {text: 'ID', value: 'id', class: "ruleCheckTable"},
@@ -101,7 +107,7 @@
                         keyword: item.keyword,
                         parameters: item.parameters,
                         message: item.message,
-                        conditionalRuleCheck: item.conditionalRuleCheck,
+                        conditionalRuleCheck: item.conditionalRuleCheck ? item.conditionalRuleCheck.keyword : "",
                     }
                 )
             );
