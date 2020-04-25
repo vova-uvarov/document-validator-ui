@@ -68,6 +68,7 @@ export default new Vuex.Store({
         resetFilterToDocumentType: (state, documentType: any) => {
             let documentTypeFilter: any = {
                 'key': documentType,
+                'value': DictionaryService.getDocumentName(documentType)
             };
             state.fieldRuleView.filter.documentTypes = [documentTypeFilter];
             state.fieldRuleView.filter.schemaTypes = [];
