@@ -8,6 +8,25 @@ import {Dictionaries} from "@/utils/Constants";
 
 Vue.use(Vuex);
 
+function defaultFilter() {
+    return {
+        documentTypes: <any>[],
+        schemaTypes: [],
+        ruleSides: [],
+        keywords: [],
+        name: '',
+        formats: [],
+        fieldName: '',
+        groupName: '',
+        description: '',
+        filedRuleSearchMode: 'LIKE',
+        validationMode: null,
+        enabled: null,
+        size: 10,
+        page: 1,
+    };
+}
+
 export default new Vuex.Store({
 
     strict: true,
@@ -19,22 +38,7 @@ export default new Vuex.Store({
             fieldRules: [],
             totalPages: 0,
             currentPage: 1,
-            filter: {
-                documentTypes: <any>[],
-                schemaTypes: [],
-                ruleSides: [],
-                keywords: [],
-                name: '',
-                formats: [],
-                fieldName: '',
-                groupName: '',
-                description: '',
-                filedRuleSearchMode: 'LIKE',
-                validationMode: null,
-                enabled: null,
-                size: 10,
-                page: 1,
-            }
+            filter: defaultFilter()
         },
     },
     getters: {
@@ -65,21 +69,8 @@ export default new Vuex.Store({
         initState: (state) => {
         },
 
-        resetFilterToDocumentType: (state, documentType: any) => {
-            let documentTypeFilter: any = {
-                'key': documentType,
-                'value': DictionaryService.getDocumentName(documentType)
-            };
-            state.fieldRuleView.filter.documentTypes = [documentTypeFilter];
-            state.fieldRuleView.filter.schemaTypes = [];
-            state.fieldRuleView.filter.ruleSides = [];
-            state.fieldRuleView.filter.formats = [];
-            state.fieldRuleView.filter.name = '';
-            state.fieldRuleView.filter.fieldName = '';
-            state.fieldRuleView.filter.groupName = '';
-            state.fieldRuleView.filter.description = '';
-            state.fieldRuleView.filter.validationMode = null;
-            state.fieldRuleView.filter.enabled = null;
+        resetFilterFieldRuleFilter: (state) => {
+            state.fieldRuleView.filter = defaultFilter()
         },
 
 

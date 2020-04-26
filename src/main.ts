@@ -25,6 +25,12 @@ axios.interceptors.request.use((config: any) => {
 
 Vue.config.productionTip = false;
 
+Vue.filter('number', (value: any) => {
+    if (!value) {
+        return 0;
+    }
+    return value;
+});
 
 Vue.filter('dateFormatter', (value: any) => {
     if (!value) {

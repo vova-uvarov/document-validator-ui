@@ -24,20 +24,34 @@
                         item-key="id"
                         class="elevation-1"
                 >
-
+                    <template v-slot:item.documentType="{ item }">
+                        <v-chip outlined v-on:click="goToFieldRules(item.documentTypeRaw, true, null)">
+                            {{item.documentType}}
+                        </v-chip>
+                    </template>
                     <template v-slot:item.fieldsRuleON="{ item }">
-                        <v-chip color="green">{{item.fieldsRuleON}}</v-chip>
+                        <v-chip outlined color="green" v-on:click="goToFieldRules(item.documentTypeRaw, true, null)">
+                            {{item.fieldsRuleON}}
+                        </v-chip>
                     </template>
                     <template v-slot:item.fieldsRuleOFF="{ item }">
-                        <v-chip color="red">{{item.fieldsRuleOFF}}</v-chip>
+                        <v-chip outlined color="red" v-on:click="goToFieldRules(item.documentTypeRaw, false, null)">
+                            {{item.fieldsRuleOFF}}</v-chip>
                     </template>
-                    <template v-slot:item.actions="{ item }">
-                        <v-btn v-on:click="goToFieldRules(item.documentTypeRaw)"
-                               text
-                               color="deep-purple accent-4"
-                        >
-                            Подробнее
-                        </v-btn>
+                    <template v-slot:item.ruleSideAll="{ item }">
+                        <v-chip outlined v-on:click="goToFieldRules(item.documentTypeRaw, null, 'ALL')">
+                            {{item.ruleSideAll}}</v-chip>
+                    </template>
+
+                    <template v-slot:item.ruleSideServer="{ item }">
+                        <v-chip outlined v-on:click="goToFieldRules(item.documentTypeRaw, null, 'SERVER')">
+                            {{item.ruleSideServer}}</v-chip>
+                    </template>
+
+                    <template v-slot:item.ruleSideClient="{ item }">
+                        <v-chip outlined v-on:click="goToFieldRules(item.documentTypeRaw, null, 'SERVER')">
+                            {{item.ruleSideClient|number}}
+                        </v-chip>
                     </template>
                 </v-data-table>
             </v-col>
@@ -47,6 +61,7 @@
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import DictionaryService from "@/services/DictionaryService";
+    import ObjectUtils from "@/utils/ObjectUtils";
 
     @Component
     export default class DocumentsList extends Vue {
@@ -57,8 +72,17 @@
         @Prop({default: false})
         public loading!: boolean;
 
-        public goToFieldRules(documentType: string) {
-            this.$store.commit('resetFilterToDocumentType', documentType);
+        public goToFieldRules(documentType: string, isEnabled: boolean, ruleSide: string) {
+            this.$store.commit('resetFilterFieldRuleFilter');
+            let newFilter: any = ObjectUtils.copy(this.$store.state.fieldRuleView.filter);
+            newFilter.documentTypes = [{
+                key: documentType,
+                value: DictionaryService.getDocumentName(documentType)
+            }];
+            newFilter.enabled = isEnabled;
+            newFilter.ruleSides = [ruleSide];
+
+            this.$store.commit('updateFieldRuleFilter', newFilter);
             this.$router.push("/fieldRules");
         }
 
@@ -87,7 +111,6 @@
                 {text: 'RuleSide ALL', value: 'ruleSideAll'},
                 {text: 'RuleSide SERVER', value: 'ruleSideServer'},
                 {text: 'RuleSide CLIENT', value: 'ruleSideClient'},
-                {text: '', value: 'actions'},
             ]
         }
     }
