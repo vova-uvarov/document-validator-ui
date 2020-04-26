@@ -51,6 +51,9 @@
                         </v-data-table>
                     </td>
                 </template>
+                <template v-slot:item.countChecks="{ item }">
+                    <v-chip outlined> {{item.countChecks}}</v-chip>
+                </template>
             </v-data-table>
         </v-col>
     </v-row>
@@ -124,6 +127,7 @@
                 {text: 'Формат', value: 'format'},
                 {text: 'Включена?', value: 'enabled'},
                 {text: 'Описание', value: 'description'},
+                {text: '', value: 'countChecks'},
                 { text: '', value: 'data-table-expand' },
             ]
         }
@@ -144,6 +148,7 @@
                         enabled: item.enabled,
                         description: item.description,
                         ruleChecks: item.ruleChecks,
+                        countChecks: item.ruleChecks.length,
                     }
                 )
             );

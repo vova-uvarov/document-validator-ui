@@ -97,7 +97,7 @@
             </v-col>
             <v-col cols="3">
                 <v-radio-group v-model="fieldRuleFilter.enabled" :mandatory="false" row>
-                    <v-subheader :inset="false">Включена: {{fieldRuleFilter.enabled}}</v-subheader>
+                    <v-subheader :inset="false">Включена:</v-subheader>
                     <v-radio label="Не важно" value="ALL"></v-radio>
                     <v-radio label="Да" :value="true"></v-radio>
                     <v-radio label="Нет" :value="false"></v-radio>
