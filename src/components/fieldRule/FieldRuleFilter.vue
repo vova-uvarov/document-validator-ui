@@ -124,24 +124,6 @@
             </v-col>
 
             <v-col cols="3">
-                <v-select
-                        :items="countsPerPage"
-                        v-model="fieldRuleFilter.size"
-                        label="Отображать на странице"
-                ></v-select>
-            </v-col>
-
-        </v-row>
-        <v-row>
-            <v-col cols="6">
-                <v-text-field
-                        type="text"
-                        label="Сообщение"
-                        v-model="fieldRuleFilter.ruleCheckMessage"
-                ></v-text-field>
-            </v-col>
-
-            <v-col cols="3">
                 <v-combobox
                         :items="keywords"
                         v-model="fieldRuleFilter.keywords"
@@ -151,6 +133,23 @@
                         @change="serachKeywordValue = ''"
                         label="Keyword"
                 ></v-combobox>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col cols="9">
+                <v-text-field
+                        type="text"
+                        label="Сообщение"
+                        v-model="fieldRuleFilter.ruleCheckMessage"
+                ></v-text-field>
+            </v-col>
+
+            <v-col cols="3">
+                <v-select
+                        :items="countsPerPage"
+                        v-model="fieldRuleFilter.size"
+                        label="Отображать на странице"
+                ></v-select>
             </v-col>
         </v-row>
         <v-row>

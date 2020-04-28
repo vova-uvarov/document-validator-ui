@@ -24,6 +24,18 @@
                     :expanded.sync="expanded"
                     class="elevation-1"
             >
+
+                <template v-slot:item.description="{ item }">
+                    <v-tooltip bottom max-width="250px">
+                        <template v-slot:activator="{ on }">
+                            <span v-on="on">
+                            {{item.description | truncateString}}
+                                </span>
+                        </template>
+                        <span>{{item.description}}</span>
+                    </v-tooltip>
+
+                </template>
                 <template v-slot:item.enabled="{ item }">
                     <v-switch
                             v-model="item.enabled"
