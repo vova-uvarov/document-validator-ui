@@ -16,11 +16,17 @@
             </v-col>
 
             <v-col cols="3">
-                <v-text-field
-                        type="text"
+                <v-combobox
+                        :items="fieldNames"
+                        v-model="fieldRuleFilter.fieldNames"
+                        :clearable="true"
+                        deletable-chips
+                        chips
+                        multiple
+                        :search-input.sync="searchFieldNameValue"
+                        @change="searchFieldNameValue = ''"
                         label="Название поля"
-                        v-model="fieldRuleFilter.fieldName"
-                ></v-text-field>
+                ></v-combobox>
             </v-col>
 
             <v-col cols="3">
@@ -162,20 +168,36 @@
         public searchDocumentTypeValue = '';
         public searchSchemaTypeValue = '';
         public searchRuleSideValue = '';
+        public searchFieldNameValue = '';
         public searchFormatValue = '';
         public serachKeywordValue = '';
+        public fieldNames = [];
 
+        @Watch("storeFilterDocumentTypes", )
+        public fieldRuleFilterDocumentTypesChanged(value: any, oldValue: any) {
+            console.log("documentTypes changed value: " + value + ", oldValue:" + oldValue)
+            let types = []
+            if (value) {
+                types = value.map((item: any) => (item.key))
+            }
+             return DictionaryService.fieldNames(types)
+                 .then((data) =>(this.fieldNames = data.map((item: any)=> item.code)));
+
+        }
         @Watch("fieldRuleFilter", {deep: true, immediate: true})
         public fieldViewFilterChanged(value: string, oldValue: string) {
             this.$root.$emit('fieldRuleFilterChanged');
             this.applyFilter();
         }
 
-
         @Debounce(500)
         public applyFilter() {
             this.$store.commit('updateFieldRuleFilter', ObjectUtils.copy(this.fieldRuleFilter));
             this.$store.dispatch('reloadFieldRules');
+        }
+
+        get storeFilterDocumentTypes(){
+            return this.$store.state.fieldRuleView.filter.documentTypes;
         }
 
         get keywords() {

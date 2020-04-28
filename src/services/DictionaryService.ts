@@ -13,4 +13,11 @@ export default class DictionaryService {
             });
     }
 
+    public static fieldNames(documentTypes: string[]) {
+        return axios.get('/api/ui/dictionary/fieldNames', {params: {documentTypes: documentTypes}})
+            .then((response) => {
+                return response.data;
+            });
+    }
+
 }

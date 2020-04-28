@@ -17,6 +17,7 @@ function defaultFilter() {
         name: '',
         formats: [],
         fieldName: '',
+        fieldNames: [],
         groupName: '',
         description: '',
         filedRuleSearchMode: 'LIKE',

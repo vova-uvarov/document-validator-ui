@@ -16,7 +16,7 @@ axios.interceptors.request.use((config: any) => {
         Object.keys(params)
             .forEach((key) => {
                 if (Array.isArray(params[key])) {
-                    params[key] = params[key].join(',');
+                    params[key] = encodeURI(params[key].join(','));
                 }
             });
     }
