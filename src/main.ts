@@ -16,7 +16,11 @@ axios.interceptors.request.use((config: any) => {
         Object.keys(params)
             .forEach((key) => {
                 if (Array.isArray(params[key])) {
-                    params[key] = encodeURI(params[key].join(','));
+                    if (key=='fieldNames') {
+                        params[key] = encodeURI(params[key].join(','));
+                    }else {
+                        params[key] = params[key].join(',');
+                    }
                 }
             });
     }

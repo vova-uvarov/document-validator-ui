@@ -20,4 +20,18 @@ export default class DictionaryService {
             });
     }
 
+    public static groupNames(documentTypes: string[]) {
+        return axios.get('/api/ui/dictionary/groupNames', {params: {documentTypes: documentTypes}})
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    public static ruleNames(documentTypes: string[]) {
+        return axios.get('/api/ui/dictionary/ruleNames', {params: {documentTypes: documentTypes}})
+            .then((response) => {
+                return response.data;
+            });
+    }
+
 }

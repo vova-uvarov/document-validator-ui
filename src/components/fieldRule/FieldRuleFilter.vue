@@ -30,11 +30,17 @@
             </v-col>
 
             <v-col cols="3">
-                <v-text-field
-                        type="text"
+                <v-combobox
+                        :items="ruleNames"
+                        v-model="fieldRuleFilter.names"
+                        :clearable="true"
+                        deletable-chips
+                        chips
+                        multiple
+                        :search-input.sync="searchNameValue"
+                        @change="searchNameValue = ''"
                         label="Название проверки"
-                        v-model="fieldRuleFilter.name"
-                ></v-text-field>
+                ></v-combobox>
             </v-col>
 
             <v-col cols="3">
@@ -73,11 +79,18 @@
             </v-col>
 
             <v-col cols="3">
-                <v-text-field
-                        type="text"
+
+                <v-combobox
+                        :items="groupNames"
+                        v-model="fieldRuleFilter.groupNames"
+                        :clearable="true"
+                        deletable-chips
+                        chips
+                        multiple
+                        :search-input.sync="searchGroupNameValue"
+                        @change="searchGroupNameValue = ''"
                         label="Группа проверки"
-                        v-model="fieldRuleFilter.groupName"
-                ></v-text-field>
+                ></v-combobox>
             </v-col>
 
             <v-col cols="3">
@@ -169,9 +182,13 @@
         public searchSchemaTypeValue = '';
         public searchRuleSideValue = '';
         public searchFieldNameValue = '';
+        public searchNameValue = '';
+        public searchGroupNameValue = '';
         public searchFormatValue = '';
         public serachKeywordValue = '';
         public fieldNames = [];
+        public groupNames = [];
+        public ruleNames = [];
 
         @Watch("storeFilterDocumentTypes", )
         public fieldRuleFilterDocumentTypesChanged(value: any, oldValue: any) {
@@ -180,8 +197,14 @@
             if (value) {
                 types = value.map((item: any) => (item.key))
             }
-             return DictionaryService.fieldNames(types)
+             DictionaryService.fieldNames(types)
                  .then((data) =>(this.fieldNames = data.map((item: any)=> item.code)));
+
+            DictionaryService.groupNames(types)
+                .then((data) =>(this.groupNames = data.map((item: any)=> item.code)))
+
+            DictionaryService.ruleNames(types)
+                .then((data) =>(this.ruleNames = data.map((item: any)=> item.code)))
 
         }
         @Watch("fieldRuleFilter", {deep: true, immediate: true})
