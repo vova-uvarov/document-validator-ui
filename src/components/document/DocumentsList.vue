@@ -80,7 +80,9 @@
                 value: DictionaryService.getDocumentName(documentType)
             }];
             newFilter.enabled = isEnabled;
-            newFilter.ruleSides = [ruleSide];
+            if (ruleSide) {
+                newFilter.ruleSides = [ruleSide];
+            }
 
             this.$store.commit('updateFieldRuleFilter', newFilter);
             this.$router.push("/fieldRules");
