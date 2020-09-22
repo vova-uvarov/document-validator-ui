@@ -29,7 +29,7 @@
                     <v-tooltip bottom max-width="250px">
                         <template v-slot:activator="{ on }">
                             <span v-on="on">
-                            {{item.description | truncateString}}
+                            {{item.description | truncateString(75)}}
                                 </span>
                         </template>
                         <span>{{item.description}}</span>
@@ -122,7 +122,7 @@
                         keyword: item.keyword,
                         parameters: item.parameters,
                         message: item.message,
-                        conditionalRuleCheck: item.conditionalRuleCheck ? item.conditionalRuleCheck.keyword : "",
+                        conditionalRuleCheck: item.conditionalRuleCheck ? item.conditionalRuleCheck.keyword+ "("+item.conditionalRuleCheck.id+")": "",
                     }
                 )
             );

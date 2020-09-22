@@ -36,8 +36,7 @@
         }
 
         get items() {
-            console.log("rawParameters=" + this.rawParameters)
-            console.log("keyword=" + this.keyword)
+            console.log("keyword=" + this.keyword + ", rawParameters=" + this.rawParameters)
             if (this.keyword === 'pattern') {
                 return [
                     {

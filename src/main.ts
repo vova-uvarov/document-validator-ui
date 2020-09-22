@@ -4,7 +4,7 @@ import router from './router';
 import store from './store';
 import vuetify from './plugins/vuetify';
 import axios from 'axios';
-import moment from 'moment';
+import moment, {max} from 'moment';
 import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import '@mdi/font/css/materialdesignicons.css';
 
@@ -43,12 +43,16 @@ Vue.filter('dateFormatter', (value: any) => {
     return moment(value).format('YYYY-MM-DD');
 });
 
-Vue.filter('truncateString', (value: any) => {
+Vue.filter('truncateString', (value: any, maxLenght: number) => {
     if (!value){
         return value;
     }
-    if (value.length > 30) {
-        return value.substring(0, 30) + '...';
+
+    if (!maxLenght){
+        maxLenght = 30;
+    }
+    if (value.length > maxLenght) {
+        return value.substring(0, maxLenght) + '...';
     } else {
         return value;
     }

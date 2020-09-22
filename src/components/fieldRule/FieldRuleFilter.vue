@@ -191,7 +191,6 @@
 
         @Watch("storeFilterDocumentTypes", )
         public fieldRuleFilterDocumentTypesChanged(value: any, oldValue: any) {
-            console.log("documentTypes changed value: " + value + ", oldValue:" + oldValue)
             let types = []
             if (value) {
                 types = value.map((item: any) => (item.key))
